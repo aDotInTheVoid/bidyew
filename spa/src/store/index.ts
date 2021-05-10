@@ -1,7 +1,17 @@
 import { createStore } from "vuex";
-// import { Card } from "@/card";
+import { Card } from "@/card";
 
-export default createStore({
+interface State {
+  hand: string[],
+  center: {
+    up: string,
+    down: string,
+    left: string,
+    right: string,
+  }
+}
+
+export default createStore<State>({
   state: {
     hand: ["King Of Clubs", "Jack of Diamonds"],
     center: {
@@ -11,7 +21,13 @@ export default createStore({
       down: "evlen",
     },
   },
-  mutations: {},
+  mutations: {
+    play(state, card: string) {
+      let index = state.hand.indexOf(card);
+      state.hand.splice(index, 1);
+      state.center.down = card;
+    }
+  },
   actions: {},
   modules: {},
 });

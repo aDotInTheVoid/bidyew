@@ -39,15 +39,9 @@ export default defineComponent({
   computed: mapState(["hand", "center"]),
   methods: {
     remove(name: string) {
-      // if (this.isClickable) {
-      //   let index = this.cards.indexOf(name);
-      //   this.cards.splice(index, 1);
-      //   this.isClickable = false;
-      //   // Kind of hacky solution, be proper when theirs a server
-      //   setInterval(() => {
-      //     this.isClickable = true;
-      //   }, 1000);
-      // }
+      let t = this as any;
+      t.$store.commit("play", name);
+      // TODO: handle isClickable
     },
   },
 });
