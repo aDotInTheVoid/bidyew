@@ -39,8 +39,7 @@ export default defineComponent({
   computed: mapState(["hand", "center"]),
   methods: {
     remove(name: string) {
-      let t = this as any;
-      t.$store.commit("play", name);
+      this.$store.commit("play", name);
       // TODO: handle isClickable
     },
   },

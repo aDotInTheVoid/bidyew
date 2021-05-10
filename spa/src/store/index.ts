@@ -1,7 +1,7 @@
 import { createStore } from "vuex";
 import { Card } from "@/card";
 
-interface State {
+export interface State {
   hand: string[],
   center: {
     up: string,
