@@ -28,7 +28,7 @@ type Message struct {
 }
 
 type GetCardResp struct {
-	name string
+	Name string
 }
 
 func getCard(ws *websocket.Conn) string {
@@ -39,7 +39,7 @@ func getCard(ws *websocket.Conn) string {
 
 	var resp GetCardResp
 	must(ws.ReadJSON(&resp))
-	return resp.name
+	return resp.Name
 }
 
 func handleRequest(w http.ResponseWriter, r *http.Request) {

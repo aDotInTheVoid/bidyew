@@ -39,7 +39,6 @@ export default defineComponent({
   },
   computed: mapState(["hand", "center", "canPlay"]),
   created() {
-    console.log("WOOT");
     const conn = new WebSocket("ws://localhost:9843/ws");
     conn.onmessage = (event) => handleEvent(event, this.$store);
     this.conn = conn;
@@ -48,15 +47,13 @@ export default defineComponent({
     tryPlay(name: string) {
       if (this.$store.state.canPlay) {
         this.$store.commit("play", name);
+
         if (this.conn) {
-          this.conn.send(
-            JSON.stringify({
-              name,
-            })
-          );
+          this.conn.send(JSON.stringify({ Name: name }));
         } else {
           console.warn("Expected a WS");
         }
+
         this.$store.commit("sentCard");
       }
     },
