@@ -11,8 +11,8 @@
         v-for="card in hand"
         :name="card"
         :key="card"
-        :isClickable="isClickable"
-        @click="remove(card)"
+        :isClickable="canPlay"
+        @click="tryPlay(card)"
       />
     </div>
   </div>
@@ -34,20 +34,19 @@ export default defineComponent({
   },
   data() {
     return {
-      // cards: Array(8).fill("Some Card"),
-      isClickable: true,
       conn: null,
     };
   },
-  computed: mapState(["hand", "center"]),
+  computed: mapState(["hand", "center", "canPlay"]),
   created() {
     const conn = new WebSocket("ws://localhost:9843/ws");
     conn.onmessage = (event) => handleEvent(event, this.$store);
   },
   methods: {
     remove(name: string) {
-      this.$store.commit("play", name);
-      // TODO: handle isClickable
+      if (this.$store.state.canPlay) {
+        this.$store.commit("play", name);
+      }
     },
   },
 });

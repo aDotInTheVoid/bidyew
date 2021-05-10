@@ -3,12 +3,13 @@ import { Card } from "@/card";
 
 export interface State {
   hand: string[],
+  canPlay: boolean,
   center: {
     up: string | null,
     down: string | null,
     left: string | null,
     right: string | null,
-  }
+  },
 }
 
 function cardName(card: any): string {
@@ -18,6 +19,7 @@ function cardName(card: any): string {
 export default createStore<State>({
   state: {
     hand: [],
+    canPlay: false,
     center: {
       left: null,
       right: null,
