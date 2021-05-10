@@ -4,21 +4,25 @@ import { Card } from "@/card";
 export interface State {
   hand: string[],
   center: {
-    up: string,
-    down: string,
-    left: string,
-    right: string,
+    up: string | null,
+    down: string | null,
+    left: string | null,
+    right: string | null,
   }
+}
+
+function cardName(card: any): string {
+  return `${card.Value} of ${card.Suit}`
 }
 
 export default createStore<State>({
   state: {
-    hand: ["King Of Clubs", "Jack of Diamonds"],
+    hand: [],
     center: {
-      left: "Queen",
-      right: "spade",
-      up: "Joker",
-      down: "evlen",
+      left: null,
+      right: null,
+      up: null,
+      down: null,
     },
   },
   mutations: {
@@ -28,7 +32,27 @@ export default createStore<State>({
       state.center.down = card;
     },
     setDeck(state, newDeck) {
-      state.hand = newDeck.map((x: any) => `${x.Value} of ${x.Suit}`)
+      state.hand = newDeck.map(cardName);
+    },
+    clearCenter(state) {
+      state.center = {
+        left: null,
+        right: null,
+        up: null,
+        down: null,
+      }
+    },
+    setLeft(state, card) {
+      state.center.left = cardName(card);
+    },
+    setRight(state, card) {
+      state.center.right = cardName(card);
+    },
+    setUp(state, card) {
+      state.center.up = cardName(card);
+    },
+    setDown(state, card) {
+      state.center.down = cardName(card);
     }
   },
   actions: {},

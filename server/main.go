@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/gorilla/websocket"
 )
@@ -34,16 +35,33 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 
 	hand := card.DealHand()
 
-	msg := Message{"setDeck", hand}
+	for {
 
-	bmsg, err := json.Marshal(msg)
-	log.Printf("%s", string(bmsg))
+		msg := Message{"clearCenter", nil}
+		bin, err := json.Marshal(msg)
+		must(err)
+		must(conn.WriteMessage(websocket.TextMessage, bin))
 
-	must(err)
+		time.Sleep(time.Second)
 
-	must(conn.WriteMessage(websocket.TextMessage, bmsg))
-	log.Println("Closing")
+		msg = Message{"setDeck", hand}
+		bin, err = json.Marshal(msg)
+		must(err)
+		must(conn.WriteMessage(websocket.TextMessage, bin))
 
+		time.Sleep(time.Second)
+
+		for _, name := range []string{"setLeft", "setRight", "setUp", "setDown"} {
+			card := card.DealHand()[0]
+
+			msg = Message{name, card}
+			bin, err := json.Marshal(msg)
+			must(err)
+			must(conn.WriteMessage(websocket.TextMessage, bin))
+
+			time.Sleep(time.Second)
+		}
+	}
 }
 
 func main() {
