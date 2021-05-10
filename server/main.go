@@ -2,6 +2,7 @@ package main
 
 import (
 	"bidyew/card"
+	"encoding/json"
 	"log"
 	"net/http"
 
@@ -21,8 +22,8 @@ var upgrade = websocket.Upgrader{
 }
 
 type Message struct {
-	ty   string
-	data interface{}
+	Kind string
+	Data interface{}
 }
 
 func handleRequest(w http.ResponseWriter, r *http.Request) {
@@ -33,9 +34,15 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 
 	hand := card.DealHand()
 
-	must(conn.WriteJSON(Message{
-		"sethand", hand,
-	}))
+	msg := Message{"setDeck", hand}
+
+	bmsg, err := json.Marshal(msg)
+	log.Printf("%s", string(bmsg))
+
+	must(err)
+
+	must(conn.WriteMessage(websocket.TextMessage, bmsg))
+	log.Println("Closing")
 
 }
 

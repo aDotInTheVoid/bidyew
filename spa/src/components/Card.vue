@@ -13,9 +13,6 @@ export default defineComponent({
     name: String,
     isClickable: Boolean,
   },
-  data() {
-    return;
-  },
 });
 </script>
 

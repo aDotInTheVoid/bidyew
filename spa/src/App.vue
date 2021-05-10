@@ -21,8 +21,10 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapState } from "vuex";
+
 import Card from "@/components/Card.vue";
 import Center from "@/components/Center.vue";
+import { handleEvent } from "@/conn";
 
 export default defineComponent({
   name: "App",
@@ -34,9 +36,14 @@ export default defineComponent({
     return {
       // cards: Array(8).fill("Some Card"),
       isClickable: true,
+      conn: null,
     };
   },
   computed: mapState(["hand", "center"]),
+  created() {
+    const conn = new WebSocket("ws://localhost:9843/ws");
+    conn.onmessage = (event) => handleEvent(event, this.$store);
+  },
   methods: {
     remove(name: string) {
       this.$store.commit("play", name);

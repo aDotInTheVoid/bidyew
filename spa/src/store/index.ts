@@ -26,6 +26,9 @@ export default createStore<State>({
       let index = state.hand.indexOf(card);
       state.hand.splice(index, 1);
       state.center.down = card;
+    },
+    setDeck(state, newDeck) {
+      state.hand = newDeck.map((x: any) => `${x.Value} of ${x.Suit}`)
     }
   },
   actions: {},
