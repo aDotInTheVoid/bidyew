@@ -1,9 +1,14 @@
 <template>
   <div class="table">
-    <Center right="9" up="foo" down="bar" />
+    <Center
+      :right="center.right"
+      :left="center.left"
+      :up="center.up"
+      :down="center.down"
+    />
     <div class="hand">
       <Card
-        v-for="card in cards"
+        v-for="card in hand"
         :name="card"
         :key="card"
         :isClickable="isClickable"
@@ -15,6 +20,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { mapState } from "vuex";
 import Card from "@/components/Card.vue";
 import Center from "@/components/Center.vue";
 
@@ -26,22 +32,22 @@ export default defineComponent({
   },
   data() {
     return {
-      cards: Array(8).fill("Some Card"),
+      // cards: Array(8).fill("Some Card"),
       isClickable: true,
     };
   },
+  computed: mapState(["hand", "center"]),
   methods: {
     remove(name: string) {
-      if (this.isClickable) {
-        let index = this.cards.indexOf(name);
-        this.cards.splice(index, 1);
-        this.isClickable = false;
-
-        // Kind of hacky solution, be proper when theirs a server
-        setInterval(() => {
-          this.isClickable = true;
-        }, 1000);
-      }
+      // if (this.isClickable) {
+      //   let index = this.cards.indexOf(name);
+      //   this.cards.splice(index, 1);
+      //   this.isClickable = false;
+      //   // Kind of hacky solution, be proper when theirs a server
+      //   setInterval(() => {
+      //     this.isClickable = true;
+      //   }, 1000);
+      // }
     },
   },
 });

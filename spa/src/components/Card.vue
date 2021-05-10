@@ -6,6 +6,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { Card as CardT } from "@/card";
 
 export default defineComponent({
   props: {
