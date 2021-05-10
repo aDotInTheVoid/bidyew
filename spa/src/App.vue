@@ -20,7 +20,7 @@ export default defineComponent({
   },
   data() {
     return {
-      cards: ["King", "Queen", "Ace", "jack"],
+      cards: Array(8).fill("Some Card"),
     };
   },
   methods: {
@@ -37,13 +37,14 @@ export default defineComponent({
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  // text-align: center;
   color: #2c3e50;
   margin-top: 60px;
 }
 
 .hand {
   display: flex;
-  flex-direction: row;
+  align-content: center;
+  max-width: 100vw;
 }
 </style>

@@ -1,6 +1,8 @@
 <template>
-  <div class="card">
-    <h2>{{ name }}</h2>
+  <div class="cardWraper">
+    <div class="card">
+      <h2 class="name">{{ name }}</h2>
+    </div>
   </div>
 </template>
 
@@ -16,10 +18,32 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .card {
+  // https://stackoverflow.com/a/50109649/
+  // TODO: Enable radius, margin and shadow
+  //   margin-left: 5px;
+  //   margin-right: 5px;
+  //   border-radius: 10px;
+  //   box-shadow: 0 14px 28px;
+
   width: 2.5in;
+  min-width: 2.5in;
   height: 3.5in;
-  margin-left: 30px;
-  margin-right: 30px;
+
   background: coral;
+  border: 5px solid darkred;
+
+  position: relative;
+  top: 0;
+  transition: top ease 0.5s;
+}
+
+.cardWraper:not(hover) {
+  overflow-x: hidden;
+}
+
+.card:hover {
+  background: darken(coral, 10%);
+  //   top: -30px;
+  overflow-x: visible;
 }
 </style>
