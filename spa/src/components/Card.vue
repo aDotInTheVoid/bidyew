@@ -1,8 +1,6 @@
 <template>
-  <div class="cardWraper">
-    <div class="card">
-      <h2 class="name">{{ name }}</h2>
-    </div>
+  <div class="card" :class="{ clickable: isClickable }">
+    <h2 class="name">{{ name }}</h2>
   </div>
 </template>
 
@@ -12,6 +10,10 @@ import { defineComponent } from "vue";
 export default defineComponent({
   props: {
     name: String,
+    isClickable: Boolean,
+  },
+  data() {
+    return;
   },
 });
 </script>
@@ -25,25 +27,26 @@ export default defineComponent({
   //   border-radius: 10px;
   //   box-shadow: 0 14px 28px;
 
-  width: 2.5in;
-  min-width: 2.5in;
-  height: 3.5in;
+  width: 150px;
 
-  background: coral;
+  min-width: 150px;
+  height: 200px;
+
+  background: lighten(coral, 10%);
   border: 5px solid darkred;
 
   position: relative;
   top: 0;
-  transition: top ease 0.5s;
+  transition: ease 0.5s;
 }
 
-.cardWraper:not(hover) {
-  overflow-x: hidden;
+.card.clickable {
+  background: coral;
 }
 
-.card:hover {
+.clickable.card:hover {
   background: darken(coral, 10%);
-  //   top: -30px;
+  top: -30px;
   overflow-x: visible;
 }
 </style>
