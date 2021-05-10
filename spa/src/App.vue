@@ -1,6 +1,11 @@
 <template>
   <div class="hand">
-    <Card v-for="card in cards" :name="card" :key="card" />
+    <Card
+      v-for="card in cards"
+      :name="card"
+      :key="card"
+      @click="remove(card)"
+    />
   </div>
 </template>
 
@@ -17,6 +22,12 @@ export default defineComponent({
     return {
       cards: ["King", "Queen", "Ace", "jack"],
     };
+  },
+  methods: {
+    remove(name: string) {
+      let index = this.cards.indexOf(name);
+      this.cards.splice(index, 1);
+    },
   },
 });
 </script>
