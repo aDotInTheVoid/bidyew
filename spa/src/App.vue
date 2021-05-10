@@ -1,6 +1,6 @@
 <template>
   <div class="table">
-    <Center left="ace" right="9" up="foo" down="bar" />
+    <Center right="9" up="foo" down="bar" />
     <div class="hand">
       <Card
         v-for="card in cards"
@@ -54,7 +54,6 @@ export default defineComponent({
   -moz-osx-font-smoothing: grayscale;
   // text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
 
