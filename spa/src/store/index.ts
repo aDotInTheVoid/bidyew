@@ -55,7 +55,14 @@ export default createStore<State>({
     },
     setDown(state, card) {
       state.center.down = cardName(card);
+    },
+    getCard(state) {
+      state.canPlay = true;
+    },
+    sentCard(state) {
+      state.canPlay = false;
     }
+
   },
   actions: {},
   modules: {},

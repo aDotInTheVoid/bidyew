@@ -27,6 +27,21 @@ type Message struct {
 	Data interface{}
 }
 
+type GetCardResp struct {
+	name string
+}
+
+func getCard(ws *websocket.Conn) string {
+	msg := Message{"getCard", nil}
+	bin, err := json.Marshal(msg)
+	must(err)
+	must(ws.WriteMessage(websocket.TextMessage, bin))
+
+	var resp GetCardResp
+	must(ws.ReadJSON(&resp))
+	return resp.name
+}
+
 func handleRequest(w http.ResponseWriter, r *http.Request) {
 	log.Println("Starting Handle")
 
@@ -59,7 +74,10 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 			must(err)
 			must(conn.WriteMessage(websocket.TextMessage, bin))
 
+			log.Print(getCard(conn))
+
 			time.Sleep(time.Second)
+
 		}
 	}
 }

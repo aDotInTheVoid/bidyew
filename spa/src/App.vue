@@ -32,20 +32,32 @@ export default defineComponent({
     Card,
     Center,
   },
-  data() {
+  data(): { conn: null | WebSocket } {
     return {
       conn: null,
     };
   },
   computed: mapState(["hand", "center", "canPlay"]),
   created() {
+    console.log("WOOT");
     const conn = new WebSocket("ws://localhost:9843/ws");
     conn.onmessage = (event) => handleEvent(event, this.$store);
+    this.conn = conn;
   },
   methods: {
-    remove(name: string) {
+    tryPlay(name: string) {
       if (this.$store.state.canPlay) {
         this.$store.commit("play", name);
+        if (this.conn) {
+          this.conn.send(
+            JSON.stringify({
+              name,
+            })
+          );
+        } else {
+          console.warn("Expected a WS");
+        }
+        this.$store.commit("sentCard");
       }
     },
   },
